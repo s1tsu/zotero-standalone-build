@@ -63,7 +63,8 @@ pref("extensions.getAddons.cache.enabled", false);
 
 // Disable add-on signature checking with unbranded Firefox build
 pref("xpinstall.signatures.required", false);
-
+// Allow legacy extensions (though this might not be necessary)
+pref("extensions.legacy.enabled", true);
 // Allow installing XPIs from any host
 pref("xpinstall.whitelist.required", false);
 // Allow installing XPIs when using a custom CA
@@ -72,6 +73,8 @@ pref("extensions.update.requireBuiltInCerts", false);
 
 // Don't connect to the Mozilla extensions blocklist
 pref("extensions.blocklist.enabled", false);
+// Avoid warning in console when opening Tools -> Add-ons
+pref("extensions.getAddons.link.url", "");
 
 // Disable places
 pref("places.history.enabled", false);
