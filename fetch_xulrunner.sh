@@ -26,7 +26,7 @@ function usage {
 	cat >&2 <<DONE
 Usage: $0 -p platforms
 Options
- -p PLATFORMS        Platforms to build (m=Mac, w=Windows, l=Linux)
+ -p PLATFORMS        Platforms to build (m=Mac, w=Windows, l=Linux, f=FreeBSD)
 DONE
 	exit 1
 }
@@ -34,6 +34,8 @@ DONE
 BUILD_MAC=0
 BUILD_WIN32=0
 BUILD_LINUX=0
+BUILD_FREEBSD=0
+
 while getopts "p:" opt; do
 	case $opt in
 		p)
@@ -43,6 +45,7 @@ while getopts "p:" opt; do
 					m) BUILD_MAC=1;;
 					w) BUILD_WIN32=1;;
 					l) BUILD_LINUX=1;;
+					f) BUILD_FREEBSD=1;;
 					*)
 						echo "$0: Invalid platform option ${OPTARG:i:1}"
 						usage
@@ -54,8 +57,10 @@ while getopts "p:" opt; do
 	shift $((OPTIND-1)); OPTIND=1
 done
 
+
+
 # Require at least one platform
-if [[ $BUILD_MAC == 0 ]] && [[ $BUILD_WIN32 == 0 ]] && [[ $BUILD_LINUX == 0 ]]; then
+if [[ $BUILD_MAC == 0 ]] && [[ $BUILD_WIN32 == 0 ]] && [[ $BUILD_LINUX == 0 ]] && [[ $BUILD_FREEBSD == 0 ]]; then
 	usage
 fi
 
@@ -190,6 +195,20 @@ if [ $BUILD_LINUX == 1 ]; then
 	extract_devtools
 	cd ..
 	rm "firefox-$GECKO_VERSION.tar.bz2"
+fi
+
+if [ $BUILD_FREEBSD == 1 ]; then
+	rm -rf firefox
+	GECKO_VERSION="${GECKO_VERSION_LINUX/esr/}"
+	cp  /usr/ports/packages/All/firefox-esr-${GECKO_VERSION}*  ./
+	echo "copied local file"
+
+	tar -xvf firefox-esr-${GECKO_VERSION}*.txz --strip-components 4 /usr/local/lib/firefox
+	cd firefox
+	modify_omni
+	extract_devtools
+	cd ..
+	rm firefox-esr-${GECKO_VERSION}*.txz
 fi
 
 echo Done
