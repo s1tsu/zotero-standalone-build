@@ -33,6 +33,15 @@ I build the package as follows.
 > sudo make package-noinstall
 ```
 
+Because of the change of `_ALL_DEPENDS` in `bsd.gecko.mk`, 
+if your ports tree is newer than 2018Q4, 
+then you may have to pass an option to `make build`:
+
+``` example
+> sudo make USE_MOZILLA='-soundtouch -webp' build
+```
+
+
 If one use the existing binary package, 
 then one may have to take care of versions of some libraries such as libicui18n, libicuuc, and libvpx.
 
