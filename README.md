@@ -2,9 +2,15 @@
 I have modified several scripts to build Zotero standalone on FreeBSD.
 I am using the build. It works well for me but not fully tested.
 
+## Note
+
+I do not use Zotero LibreOffice Integration. 
+If you want to use it, then you may have to build it.
+
 ## Environment
 
   - FreeBSD 11.2-RELEASE
+  - FreeBSD 12.0-RELEASE
 
 ## Prerequisites
 
@@ -18,6 +24,14 @@ I am using the build. It works well for me but not fully tested.
 
 The PDF tools are bundled with Zotero since Zotero 5.0.36. 
 The bundled linux binaries seem to work well via Linux binary compatibility.
+
+Optionally, you may build the PDF tools. 
+It seems that the source of the bundled pdftools can be found at [cross-xpdf](https://github.com/zotero/cross-xpdf).
+By modifying the build script in the `Dockerfile`, 
+one can build them (see https://github.com/s1tsu/cross-xpdf). 
+I myself use the bundled linux binaries via Linux binary compatibility and do not use the native build.
+
+
 
 ### Firefox ESR package ( `firefox-esr-52.9.0` )
 
